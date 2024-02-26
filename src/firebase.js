@@ -1,7 +1,7 @@
 /* global firebase */
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import 'firebase/auth';
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAxOvxZeLz_UlPXIrTVkHWeeY78ctSLJvw",
@@ -14,4 +14,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export default app; // exporting the app, not the entire firebase object
+const auth = getAuth(app);
+
+export { auth };
+
