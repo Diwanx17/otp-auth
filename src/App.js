@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from "react";
-import { auth } from "./firebase";
+import {auth, dbRef} from "./firebase";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import {getDatabase, ref} from "firebase/database";
+import { set } from 'firebase/database';
 
 function App() {
   const [mobile, setMobile] = useState("");
@@ -52,6 +54,34 @@ function App() {
       const user = result.user;
       console.log(JSON.stringify(user));
       alert("User is verified");
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          // Success callback
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+
+          // Store in Firebase
+          const db = getDatabase();
+          const locationRef = ref(db, 'location/' + user.uid);
+
+          set(locationRef, {
+            latitude: latitude,
+            longitude: longitude
+          }).then(() => {
+            console.log("Location saved in database");
+          }).catch((error) => {
+            console.error("Failed to save location in database", error);
+          });
+
+        }, (error) => {
+          // Error callback
+          console.error("Failed to get geolocation", error);
+        });
+      } else {
+        console.log("Geolocation is not supported by this browser.");
+      }
+
     }).catch((error) => {
       console.log("User couldn't sign in (bad verification code?)");
     });
