@@ -1,0 +1,10 @@
+{
+  "files": {
+    "main.js": "/otp-auth/static/js/main.02300af8.js",
+    "index.html": "/otp-auth/index.html",
+    "main.02300af8.js.map": "/otp-auth/static/js/main.02300af8.js.map"
+  },
+  "entrypoints": [
+    "static/js/main.02300af8.js"
+  ]
+}
